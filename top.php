@@ -28,7 +28,7 @@ $args_sub = 14;
 		<div class="col-md-4">
 			<ul class="nav flex-column nav-pills">
 				<li class="nav-item">
-					<a class="nav-link active" href="index.php">Welcome</a>
+					<a class="nav-link" href="index.php">Welcome</a>
 				</li>
                 <?php
                 $files = glob($script . 'args-*.txt');
@@ -46,11 +46,11 @@ $args_sub = 14;
 					<a class="nav-link" href="server.php?id=<?php echo $id + 1; ?>&new=true">New server</a>
 				</li>
 				<li class="nav-item dropdown ml-md-auto">
-					 <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Plus</a>
+					 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" href="#">About</a>
 					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-						 <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
-						<div class="dropdown-divider">
-						</div> <a class="dropdown-item" href="#">Separated link</a>
+						 <a class="dropdown-item" href="https://github.com/EmerickH/VBAN-manager">View project on Github</a>
+                        <a class="dropdown-item" href="https://github.com/quiniouben/vban">VBAN Linux adaptation</a>
+                        <a class="dropdown-item" href="https://www.vb-audio.com/Voicemeeter/vban.htm">VBAN</a>
 					</div>
 				</li>
 			</ul>
