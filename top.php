@@ -1,10 +1,5 @@
 <?php
-$script = './script/';
-$script_sh = './vban.sh';
-$args = $script . 'args-';
-$args_sub = 14;
-$plugins_folder = './plugins/';
-$plugins_sub = 10;
+include 'config.php';
 ?>
 
 <!DOCTYPE html>
@@ -24,9 +19,24 @@ $plugins_sub = 10;
 
   </head>
   <body>
+      
 
     <div class="container-fluid">
-	<div class="row mt-5">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <?php
+            if ($_GET['message']){
+            ?>
+            <div class="alert alert-success alert-dismissible">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <strong><?php echo $_GET['message']; ?></strong>
+            </div>
+            <?php
+            }
+            ?>
+        </div>
+    </div>
+	<div class="row">
 		<div class="col-md-4">
 			<ul class="nav flex-column nav-pills">
 				<li class="nav-item">
