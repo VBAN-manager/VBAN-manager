@@ -1,6 +1,8 @@
 <?php
 include 'top.php';
 
+$page = "server";
+
     function after ($this, $inthat)
     {
         if (!is_bool(strpos($inthat, $this)))

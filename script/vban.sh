@@ -15,6 +15,10 @@ stop)
    kill `cat $2.pid`
    rm $2.pid
    ;;
+plugin)
+   cd ../plugins/$2/
+   bash $2.sh ${@:3}
+   ;;
 status)
    if [ -e $2.pid ]; then
       echo vban server is running, pid=`cat $2.pid`
@@ -24,7 +28,7 @@ status)
    fi
    ;;
 *)
-   echo "Usage: $0 {start|args|remove|status}"
+   echo "Usage: $0 {start|args|remove|status|plugin}"
 esac
 
 exit 0

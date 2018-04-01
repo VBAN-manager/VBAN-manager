@@ -1,4 +1,7 @@
-<?php include 'top.php'; ?>
+<?php
+include 'top.php';
+$page = "welcome";
+?>
 		<div class="col-md-8">
 			<h3>
 				VBAN manager

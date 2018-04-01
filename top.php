@@ -3,6 +3,8 @@ $script = './script/';
 $script_sh = './vban.sh';
 $args = $script . 'args-';
 $args_sub = 14;
+$plugins_folder = './plugins/';
+$plugins_sub = 10;
 ?>
 
 <!DOCTYPE html>
@@ -24,31 +26,43 @@ $args_sub = 14;
   <body>
 
     <div class="container-fluid">
-	<div class="row">
+	<div class="row mt-5">
 		<div class="col-md-4">
 			<ul class="nav flex-column nav-pills">
 				<li class="nav-item">
-					<a class="nav-link" href="index.php">Welcome</a>
+					<a class="nav-link" id="page-welcome" href="index.php">Welcome</a>
 				</li>
+                <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" id="page-server" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Servers</a>
+                    <div class="dropdown-menu" aria-labelledby="page-server">
                 <?php
                 $files = glob($script . 'args-*.txt');
                 $id = 1;
                 foreach($files as $file){
                     $id = substr($file, $args_sub, -4);
                 ?>
-				<li class="nav-item">
-					<a class="nav-link" href="server.php?id=<?php echo $id; ?>">Server #<?php echo $id; ?></a>
-				</li>
+					<a class="dropdown-item" href="server.php?id=<?php echo $id; ?>">Server #<?php echo $id; ?></a>
                 <?php
                 }
                 ?>
-				<li class="nav-item">
-					<a class="nav-link" href="server.php?id=<?php echo $id + 1; ?>&new=true">New server</a>
+					<a class="dropdown-item" href="server.php?id=<?php echo $id + 1; ?>&new=true">New server</a>
+                    </div>
 				</li>
+                <?php
+                $plugins = glob($plugins_folder . '*', GLOB_ONLYDIR);
+                foreach($plugins as $plugin){
+                    $name = substr($plugin, $plugins_sub);
+                ?>
+                    <li class="nav-item">
+                        <a class="nav-link" id="page-plugins-<?php echo $name; ?>" href="plugin.php?name=<?php echo $name; ?>"><?php echo $name; ?></a>
+                    </li>
+                <?php
+                }
+                ?>
 				<li class="nav-item dropdown ml-md-auto">
 					 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" href="#">About</a>
 					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-						 <a class="dropdown-item" href="https://github.com/EmerickH/VBAN-manager">View project on Github</a>
+						 <a class="dropdown-item" href="https://github.com/VBAN-manager/VBAN-manager">View project on Github</a>
                         <a class="dropdown-item" href="https://github.com/quiniouben/vban">VBAN Linux adaptation</a>
                         <a class="dropdown-item" href="https://www.vb-audio.com/Voicemeeter/vban.htm">VBAN</a>
 					</div>
