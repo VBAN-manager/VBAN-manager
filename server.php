@@ -72,6 +72,10 @@ $arguments = after(" ", $argscontent);
                 <button type="button" class="btn btn-danger" onclick="location.href='action.php?type=remove&id=<?php echo $id; ?>';">
 					Remove
 				</button>
+                <div class="form-group">
+                    <label for="log">Log:</label>
+                    <iframe id="log" src="log.php?id=<?php echo $id; ?>" style="width:100%;height:250px;border:1px solid rgba(0,0,0,.15);border-radius:.25rem;"></iframe>
+                </div>
 			</form>
 		</div>
 <?php include 'bottom.php'; ?>

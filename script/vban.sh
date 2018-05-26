@@ -2,7 +2,8 @@
 
 case "$1" in
 start)
-   vban_`cat args-$2.txt` &
+   echo "Started">log-$2.txt
+   vban_`cat args-$2.txt` &>> log-$2.txt &
    echo $!>$2.pid
    ;;
 args)
@@ -14,6 +15,7 @@ remove)
 stop)
    kill `cat $2.pid`
    rm $2.pid
+   echo "Stopped">>log-$2.txt
    ;;
 plugin)
    cd ../plugins/$2/
