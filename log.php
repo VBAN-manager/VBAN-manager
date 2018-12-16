@@ -1,8 +1,13 @@
-<meta http-equiv="refresh" content="5">
+<meta http-equiv="refresh" content="3">
 <?php
-$myfile = fopen('script/log-' . $_GET['id'] . '.txt', "r") or die("Unable to open file!");
-while(!feof($myfile)) {
-  echo fgets($myfile) . "<br>";
+$name = 'script/log-' . $_GET['id'] . '.txt';
+if (file_exists($name)){
+    $myfile = fopen($name, "r") or die("Unable to open file!");
+    while(!feof($myfile)) {
+      echo fgets($myfile) . "<br>";
+    }
+    fclose($myfile);
+}else{
+    echo "No log file";
 }
-fclose($myfile);
 ?> 

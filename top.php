@@ -25,7 +25,7 @@ include 'config.php';
     <div class="row mt-5">
         <div class="col-md-12">
             <?php
-            if ($_GET['message']){
+            if (isset($_GET['message'])){
             ?>
             <div class="alert alert-success alert-dismissible">
               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

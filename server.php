@@ -1,4 +1,7 @@
 <?php
+//if (!isset($_GET['refresh'])){
+    //header("Cache-Control: no-cache, must-revalidate" );
+//}
 include 'top.php';
 
 $page = "server";
@@ -18,9 +21,20 @@ $id = $_GET['id'];
 $pidfile = $script . $id . '.pid';
 $argsfile = $args . $id . '.txt';
 
-$argscontent = file_get_contents($argsfile);
-$type = before(" ", $argscontent);
-$arguments = after(" ", $argscontent);
+if (!isset($_GET['new'])){
+    $argscontent = file_get_contents($argsfile);
+    $type = before(" ", $argscontent);
+    $arguments = after(" ", $argscontent);
+
+    preg_match_all("/-(.) ([^ ]+) /", $arguments . " ",$argsar);
+    $args = array();
+    for ($i = 0; $i < count($argsar[1]); $i++) {
+        $args[$argsar[1][$i]] = $argsar[2][$i];
+    }
+}else{
+    $type = "";
+}
+
 ?>
 		<div class="col-md-8">
 			<h3>
@@ -38,7 +52,7 @@ $arguments = after(" ", $argscontent);
                     ?>
                 </button>
                 <?php
-                if (!$_GET['new']){
+                if (!isset($_GET['new'])){
                 ?>
 				<button class="btn btn-secondary btn-success" type="button" onclick="location.href='action.php?type=start&id=<?php echo $id; ?>';">
 					Start
@@ -61,10 +75,88 @@ $arguments = after(" ", $argscontent);
                 </div> 
 				<div class="form-group">
                     <input type="hidden" name="nb" value="<?php echo $id; ?>" />
-					<label for="args">
-						Args
+					<label for="i">
+						Source/Destination IP
 					</label>
-					<input class="form-control" name="args" id="args" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" autocomplete="off" type="text" value="<?php echo $arguments ?>">
+					<input class="form-control" name="i" id="i" type="text" value="<?php if (isset($args["i"])){echo $args["i"];}; ?>">
+                    <label for="p">
+						Port (default: 6980)
+					</label>
+                    <input class="form-control" name="p" id="p" type="text" value="<?php if (isset($args["p"])){echo $args["p"];}else{echo "6980";} ?>">
+                    <label for="s">
+						Stream name
+					</label>
+                    <input class="form-control" name="s" id="s" type="text" value="<?php if (isset($args["s"])){echo $args["s"];}; ?>">
+                    <label for="b">
+						Backend (default: alsa, only alsa supported on emitter)
+					</label>
+                    <select class="form-control" id="b" name="b">
+                        <?php if (isset($args["b"])){ ?>
+                            <option selected hidden><?php echo $args["b"]; ?></option>
+                            <option>alsa</option>
+                        <?php }else{ ?>
+                            <option selected>alsa</option>
+                        <?php } ?>
+                        <option>pulseaudio</option>
+                        <option>jack</option>
+                        <option>pipe</option>
+                        <option>file</option>
+                    </select>
+                    <?php if ($type == "receptor"){ ?>
+                        <label for="q">
+                            Quality (default: 1)
+                        </label>
+                        <select class="form-control" id="q" name="q">
+                            <option>0</option>
+                            <?php if (isset($args["q"])){ ?>
+                                <option selected hidden><?php echo $args["q"]; ?></option>
+                                <option>1</option>
+                            <?php }else{ ?>
+                                <option selected>1</option>
+                            <?php } ?>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    <?php }elseif ($type == "emitter"){ ?>
+                         <label for="r">
+                            Rate (default: 44100)
+                        </label>
+                        <input class="form-control" name="r" id="r" type="text" value="<?php if (isset($args["r"])){echo $args["r"];} ?>">
+                        <label for="n">
+                            Audio device number of channels (default: 2)
+                        </label>
+                        <input class="form-control" name="n" id="n" type="text" value="<?php if (isset($args["n"])){echo $args["n"];} ?>">
+                        <label for="f">
+                            Audio device sample format (default: 16I)
+                        </label>
+                        <input class="form-control" name="f" id="f" type="text" value="<?php if (isset($args["f"])){echo $args["f"];} ?>">
+                    <?php } ?>
+                    <label for="c">
+						Channels (optional)
+					</label>
+                    <input class="form-control" name="c" id="c" type="text" value="<?php if (isset($args["c"])){echo $args["c"];} ?>">
+                    <label for="d">
+						Audio device (optional)
+					</label>
+                    <input class="form-control" name="d" id="d" type="text" value="<?php if (isset($args["d"])){echo $args["d"];} ?>">
+                    <label for="l">
+						Log level (default: 1)
+					</label>
+                    <select class="form-control" id="l" name="l">
+                        <option>0</option>
+                        <?php if (isset($args["l"])){ ?>
+                            <option selected hidden><?php echo $args["l"]; ?></option>
+                            <option>1</option>
+                        <?php }else{ ?>
+                            <option selected>1</option>
+                        <?php } ?>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
 				</div>
 				<button type="submit" class="btn btn-primary">
 					Change
