@@ -29,7 +29,7 @@ include 'config.php';
             ?>
             <div class="alert alert-success alert-dismissible">
               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <strong><?php echo $_GET['message']; ?></strong>
+              <strong><?php echo urldecode($_GET['message']); ?></strong>
             </div>
             <?php
             }

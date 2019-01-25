@@ -1,13 +1,8 @@
-<meta http-equiv="refresh" content="3">
+<meta http-equiv="refresh" content="5">
 <?php
-$name = 'script/log-' . $_GET['id'] . '.txt';
-if (file_exists($name)){
-    $myfile = fopen($name, "r") or die("Unable to open file!");
-    while(!feof($myfile)) {
-      echo fgets($myfile) . "<br>";
-    }
-    fclose($myfile);
-}else{
-    echo "No log file";
-}
-?> 
+include 'config.php';
+$command = $script_sh." status ".$_GET['id'];
+chdir($script);
+$return = shell_exec("sudo " . $command);
+echo nl2br($return);
+?>

@@ -18,7 +18,6 @@ $page = "server";
     };
 
 $id = $_GET['id'];
-$pidfile = $script . $id . '.pid';
 $argsfile = $args . $id . '.txt';
 
 if (!isset($_GET['new'])){
@@ -43,12 +42,8 @@ if (!isset($_GET['new'])){
 			<div class="btn-group btn-group-lg" role="group">
                 <button class="btn btn-secondary btn-info" type="button">
                     <?php
-                    if (file_exists($pidfile)) {
-                        echo "Running with PID ";
-                        readfile($pidfile);
-                    }else{
-                        echo "Not running";
-                    }
+                    include("status.php");
+                    echo $status;
                     ?>
                 </button>
                 <?php
@@ -59,6 +54,11 @@ if (!isset($_GET['new'])){
 				</button> 
 				<button class="btn btn-secondary btn-danger" type="button" onclick="location.href='action.php?type=stop&id=<?php echo $id; ?>';">
 					Stop
+				</button>
+          </div>
+          <div class="btn-group btn-group-lg" role="group">
+                <button class="btn btn-secondary btn-warning" type="button" onclick="window.prompt('Enter this command in a terminal to start server at boot (or replace enable with disable to stop starting at boot)','sudo systemctl enable vban@<?php echo $id; ?>');">
+					Enable/disable start at boot
 				</button>
                 <?php
                 }

@@ -1,0 +1,11 @@
+[Unit]
+Description=VBAN manager server #%i
+After=network.target
+
+[Service]
+ExecStart=/bin/sh /var/www/html/script/vban.sh start-service %i
+WorkingDirectory=/var/www/html/script
+User=pi
+
+[Install]
+WantedBy=multi-user.target
