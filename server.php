@@ -6,16 +6,16 @@ include 'top.php';
 
 $page = "server";
 
-    function after ($this, $inthat)
-    {
-        if (!is_bool(strpos($inthat, $this)))
-        return substr($inthat, strpos($inthat,$this)+strlen($this));
-    };
+function after ($thiss, $inthat)
+{
+    if (!is_bool(strpos($inthat, $thiss)))
+        return substr($inthat, strpos($inthat,$thiss)+strlen($thiss));
+};
 
-    function before ($this, $inthat)
-    {
-        return substr($inthat, 0, strpos($inthat, $this));
-    };
+function before ($thiss, $inthat)
+{
+    return substr($inthat, 0, strpos($inthat, $thiss));
+};
 
 $id = $_GET['id'];
 $argsfile = $args . $id . '.txt';
